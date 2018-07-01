@@ -1,5 +1,6 @@
 package br.ufpe.cin.flixcrawlerdata.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,10 @@ public class PaginaService {
 
 	public synchronized Long count() {
 		return this.pr.count();
+	}
+
+	public List<Long> getIdsByDomain(String domain) {
+		return this.pr.findIdByDominio(domain);
 	}
 
 }

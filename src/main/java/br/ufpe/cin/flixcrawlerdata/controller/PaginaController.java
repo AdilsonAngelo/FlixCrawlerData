@@ -1,5 +1,9 @@
 package br.ufpe.cin.flixcrawlerdata.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +34,8 @@ public class PaginaController  {
 	}
 	
 	@GetMapping("/url/{url}")
-	public Pagina getPaginaUrl(@PathVariable String url) {
-		return this.ps.getByUrl(url);
+	public Pagina getPaginaUrl(@PathVariable String url) throws UnsupportedEncodingException {
+		return this.ps.getByUrl(URLDecoder.decode(url, "UTF-8"));
 	}
 	
 	@GetMapping("/count")
@@ -39,9 +43,14 @@ public class PaginaController  {
 		return this.ps.count();
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public Pagina deletePagina(@PathVariable long id) {
 		return this.ps.delete(id);
+	}
+	
+	@GetMapping("/domain-ids/{domain}")
+	public List<Long> getByDomain(@PathVariable String domain){
+		return this.ps.getIdsByDomain(domain);
 	}
 	
 }
